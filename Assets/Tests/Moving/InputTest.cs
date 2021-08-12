@@ -17,11 +17,10 @@ public class InputTest : MonoBehaviour
     {
         var value = context.ReadValue<Vector2>();
         _force = new Vector3(value.x, 0, value.y);
-        Debug.Log( _force);
     }
 
     private void FixedUpdate()
     {
-        _rigidbody.AddForce(_force * speed);
+        _rigidbody.AddForce(_force * speed, ForceMode.Acceleration);
     }
 }
