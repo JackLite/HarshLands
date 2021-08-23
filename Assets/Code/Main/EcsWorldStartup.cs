@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Reflection;
 using Leopotam.Ecs;
+using Main.Input;
+using Main.Movement;
 using UnityEngine;
 
 namespace Main
@@ -28,11 +30,17 @@ namespace Main
                 _systems.Add((IEcsSystem)Activator.CreateInstance(system));
 
             _systems.Init();
+            CreatePlayer();
+        }
+
+        private void CreatePlayer()
+        {
             var playerEntity = _world.NewEntity();
             playerEntity.Replace(new MovementComponent
             {
                 Transform = player.transform, MovementMono = player.GetComponent<MovementMono>()
             });
+            playerEntity.Replace(new InputComponent());
         }
 
         private void Update()
@@ -44,7 +52,6 @@ namespace Main
 
         private void FixedUpdate()
         {
-            Debug.Log("ecs " + (Time.time - _lastTime));
             _lastTime = Time.time;
             _systems.RunPhysics();
         }

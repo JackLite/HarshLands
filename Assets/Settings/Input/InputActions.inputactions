@@ -2,7 +2,7 @@
     "name": "InputActions",
     "maps": [
         {
-            "name": "TestMap",
+            "name": "MainMap",
             "id": "f6bdafd2-15ad-48de-b069-d5e30b0ab522",
             "actions": [
                 {

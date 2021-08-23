@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Main
+namespace Main.Movement
 {
     public struct MovementComponent
     {
