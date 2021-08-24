@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: b26d21b550aa40b4495a2415480cf00d
+  m_SerializeEntries:
+  - m_GUID: 9a24654d7b938ef4c8696adc2a3241fc
+    m_Address: Assets/Addressables
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 102900000, guid: 9a24654d7b938ef4c8696adc2a3241fc, type: 3}
+    m_TargetAsset: {fileID: 102900000, guid: 9a24654d7b938ef4c8696adc2a3241fc, type: 3}
+  - m_GUID: 5fa7074f77b16534bbeb169a33f299eb
+    m_Address: Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 4249154584913298289, guid: 5fa7074f77b16534bbeb169a33f299eb, type: 3}
+    m_TargetAsset: {fileID: 4249154584913298289, guid: 5fa7074f77b16534bbeb169a33f299eb, type: 3}
+  - m_GUID: da76d3bbb2846e947ace651a286b2c61
+    m_Address: PlayerCamera
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 3842741755432199853, guid: da76d3bbb2846e947ace651a286b2c61, type: 3}
+    m_TargetAsset: {fileID: 3842741755432199853, guid: da76d3bbb2846e947ace651a286b2c61, type: 3}
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 41cc08b4f158241419a8bf6e7d27a5b4, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 92a84e062fb7daa48903d7107dac87f4, type: 2}
+    - {fileID: 11400000, guid: 39e21c9194cb3d746a36d2bbaf83cbcb, type: 2}

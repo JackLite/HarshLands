@@ -4,9 +4,8 @@ namespace Main.Movement
 {
     public struct MovementComponent
     {
-        public Transform Transform;
+        public float Speed;
+        public float RotationSpeed;
         public MovementMono MovementMono;
-        public Vector2 Translation;
-        public Quaternion Rotation;
     }
 }

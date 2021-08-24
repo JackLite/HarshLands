@@ -35,6 +35,13 @@ namespace Leopotam.Ecs {
         readonly object[] _filterCtor;
 
         /// <summary>
+        /// Creates new ecs-world instance with default config.
+        /// </summary>
+        public EcsWorld() : this(default)
+        {
+        }
+
+        /// <summary>
         /// Creates new ecs-world instance.
         /// </summary>
         /// <param name="config">Optional config for default cache sizes. On zero or negative value - default value will be used.</param>

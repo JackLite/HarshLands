@@ -1,11 +1,12 @@
 ﻿using System.Linq;
 using Leopotam.Ecs;
+using Main.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Main.Input
 {
-    [EcsSystem]
+    [EcsSystem(typeof(PlayerSetup))]
     public class InputReadSystem : IEcsInitSystem, IEcsRunSystem
     {
         private readonly PlayerInput _playerInput;

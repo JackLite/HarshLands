@@ -2,45 +2,29 @@
 using System.Linq;
 using System.Reflection;
 using Leopotam.Ecs;
-using Main.Input;
-using Main.Movement;
 using UnityEngine;
 
 namespace Main
 {
     public class EcsWorldStartup : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject player;
-
-        private EcsWorld _world;
+        private static readonly Lazy<EcsWorld> LazyWorld = new Lazy<EcsWorld>();
+        public static readonly EcsWorld World = LazyWorld.Value;
         private EcsSystems _systems;
 
-        public static EcsWorld World;
-
-        private void Start()
+        private void Awake()
         {
-            _world = new EcsWorld();
-            _systems = new EcsSystems(_world);
-            var systems = Assembly.GetExecutingAssembly()
-                                  .GetTypes()
-                                  .Where(t => t.GetCustomAttribute<EcsSystemAttribute>() != null);
+            _systems = new EcsSystems(World);
+            var setups = Assembly.GetExecutingAssembly()
+                                 .GetTypes()
+                                 .Where(t => t.IsSubclassOf(typeof(EcsSetup)))
+                                 .Select(t => (EcsSetup)Activator.CreateInstance(t))
+                                 .ToArray();
 
-            foreach (var system in systems) 
-                _systems.Add((IEcsSystem)Activator.CreateInstance(system));
+            foreach (var type in setups)
+                type.Setup(_systems);
 
             _systems.Init();
-            CreatePlayer();
-        }
-
-        private void CreatePlayer()
-        {
-            var playerEntity = _world.NewEntity();
-            playerEntity.Replace(new MovementComponent
-            {
-                Transform = player.transform, MovementMono = player.GetComponent<MovementMono>()
-            });
-            playerEntity.Replace(new InputComponent());
         }
 
         private void Update()
@@ -48,18 +32,15 @@ namespace Main
             _systems.Run();
         }
 
-        private float _lastTime;
-
         private void FixedUpdate()
         {
-            _lastTime = Time.time;
             _systems.RunPhysics();
         }
 
         private void OnDestroy()
         {
             _systems.Destroy();
-            _world.Destroy();
+            World.Destroy();
         }
     }
 }
