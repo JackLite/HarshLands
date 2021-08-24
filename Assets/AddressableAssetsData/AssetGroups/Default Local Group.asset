@@ -21,20 +21,26 @@ MonoBehaviour:
     m_Address: Assets/Addressables
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 102900000, guid: 9a24654d7b938ef4c8696adc2a3241fc, type: 3}
-    m_TargetAsset: {fileID: 102900000, guid: 9a24654d7b938ef4c8696adc2a3241fc, type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   - m_GUID: 5fa7074f77b16534bbeb169a33f299eb
     m_Address: Player
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 4249154584913298289, guid: 5fa7074f77b16534bbeb169a33f299eb, type: 3}
-    m_TargetAsset: {fileID: 4249154584913298289, guid: 5fa7074f77b16534bbeb169a33f299eb, type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   - m_GUID: da76d3bbb2846e947ace651a286b2c61
     m_Address: PlayerCamera
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 3842741755432199853, guid: da76d3bbb2846e947ace651a286b2c61, type: 3}
-    m_TargetAsset: {fileID: 3842741755432199853, guid: da76d3bbb2846e947ace651a286b2c61, type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 711baf65435440c48a7504bdfa6f106c
+    m_Address: InteractiveObject
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 4138601197366414253, guid: 711baf65435440c48a7504bdfa6f106c, type: 3}
+    m_TargetAsset: {fileID: 4138601197366414253, guid: 711baf65435440c48a7504bdfa6f106c, type: 3}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 41cc08b4f158241419a8bf6e7d27a5b4, type: 2}
   m_SchemaSet:
