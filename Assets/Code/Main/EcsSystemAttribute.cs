@@ -4,10 +4,10 @@ namespace Main
 {
     public class EcsSystemAttribute : Attribute
     {
-        public readonly Type Startup;
-        public EcsSystemAttribute(Type startup)
+        public readonly Type Setup;
+        public EcsSystemAttribute(Type setup)
         {
-            Startup = startup;
+            Setup = setup;
         }
     }
 }

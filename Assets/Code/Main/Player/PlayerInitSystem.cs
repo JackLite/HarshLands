@@ -55,6 +55,7 @@ namespace Main.Player
                 RotationSpeed = 25f
             };
             player.Replace(movementComponent);
+            player.Replace(new PlayerComponent());
         }
 
         private static void AddInputComponent(EcsEntity player)

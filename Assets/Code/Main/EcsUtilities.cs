@@ -13,7 +13,7 @@ namespace Main
             return
                 from type in Assembly.GetExecutingAssembly().GetTypes()
                 let attr = type.GetCustomAttribute<EcsSystemAttribute>()
-                where attr != null && attr.Startup == setupType
+                where attr != null && attr.Setup == setupType
                 select (IEcsSystem) Activator.CreateInstance(type);
         }
     }

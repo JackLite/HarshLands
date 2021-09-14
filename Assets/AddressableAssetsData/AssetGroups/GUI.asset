@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: GUI
+  m_EditorClassIdentifier: 
+  m_GroupName: GUI
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 7b5c4d3473f2cbe4e8ae3326b4b8459d
+  m_SerializeEntries:
+  - m_GUID: 45aac4a34c9e4e24183260c56ae1f52d
+    m_Address: ActionButton
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 0107265274b3c0b4089db5262fa19849
+    m_Address: InteractionPanel
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 9130232261368792437, guid: 0107265274b3c0b4089db5262fa19849, type: 3}
+    m_TargetAsset: {fileID: 9130232261368792437, guid: 0107265274b3c0b4089db5262fa19849, type: 3}
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 41cc08b4f158241419a8bf6e7d27a5b4, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: e95dfd9f8f3166749bd9bf2bc4ad382b, type: 2}
+    - {fileID: 11400000, guid: c8e295a999b692c40b3955659b3dcf54, type: 2}

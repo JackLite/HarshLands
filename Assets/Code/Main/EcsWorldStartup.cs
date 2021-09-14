@@ -30,6 +30,7 @@ namespace Main
         private void Update()
         {
             _systems.Run();
+            EcsWorldEventsBlackboard.Update();
         }
 
         private void FixedUpdate()

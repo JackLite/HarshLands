@@ -10,6 +10,7 @@ namespace InteractiveObjects
         private MeshRenderer _renderer;
 
         private Color _defaultColor;
+        private bool _interactionPossible;
         
         public event Action OnPlayerEnter;
         public event Action OnPlayerExit;
@@ -31,6 +32,9 @@ namespace InteractiveObjects
 
         public void SetInteraction(bool state)
         {
+            if (_interactionPossible == state)
+                return;
+            _interactionPossible = state;
             _renderer.material.color = state ? Color.red : _defaultColor;
         }
     }
