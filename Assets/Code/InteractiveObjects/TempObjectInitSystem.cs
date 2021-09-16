@@ -1,4 +1,5 @@
-﻿using InteractiveObjects.Components;
+﻿using EcsCore;
+using InteractiveObjects.Components;
 using Leopotam.Ecs;
 using Main;
 using UnityEngine;
@@ -29,7 +30,7 @@ namespace InteractiveObjects
             if (handle.Result == null)
                 return;
 
-            var interactiveObj = EcsWorldStartup.World.NewEntity();
+            var interactiveObj = EcsWorldContainer.world.NewEntity();
             var mono = handle.Result.GetComponent<InteractiveObjectMono>();
 
             interactiveObj.Replace(new InteractiveObjectComponent

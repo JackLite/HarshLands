@@ -1,4 +1,5 @@
 ﻿using Cinemachine;
+using EcsCore;
 using Leopotam.Ecs;
 using Main.Input;
 using Main.Movement;
@@ -41,7 +42,7 @@ namespace Main.Player
 
         private void CreatePlayer()
         {
-            var player = EcsWorldStartup.World.NewEntity();
+            var player = EcsWorldContainer.world.NewEntity();
             AddInputComponent(player);
             AddMovementComponent(player, _playerMono);
         }

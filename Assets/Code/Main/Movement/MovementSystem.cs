@@ -1,4 +1,5 @@
-﻿using Leopotam.Ecs;
+﻿using EcsCore;
+using Leopotam.Ecs;
 using Main.Input;
 using Main.Player;
 using UnityEngine;

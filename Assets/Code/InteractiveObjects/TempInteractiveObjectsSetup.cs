@@ -1,4 +1,5 @@
 ﻿using System;
+using EcsCore;
 using Main;
 
 namespace InteractiveObjects

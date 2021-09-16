@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using EcsCore;
+using InteractiveObjects;
 using InteractiveObjects.Components;
 using InteractiveObjects.GUI;
 using Leopotam.Ecs;
@@ -10,17 +12,31 @@ using UnityEngine.InputSystem;
 
 namespace Main.Interaction
 {
-    public class InteractionController
+    public class InteractionController : IDisposable
     {
         private bool _isInteract;
         private ActionsPanelUI _actionsPanel;
 
         private readonly IEnumerable<IInteractionHandler> _interactionHandlers;
+        private readonly PlayerInput _playerInput;
 
         public InteractionController(PlayerInput playerInput)
         {
-            playerInput.onActionTriggered += OnActionTriggered;
+            _playerInput = playerInput;
+            _playerInput.onActionTriggered += OnActionTriggered;
+            EcsWorldEventsBlackboard.AddEventHandler<InteractiveObjectsCountChangeEcsEvent>(OnPlayerInteractionStateChange);
             _interactionHandlers = GetInteractionHandlers();
+        }
+
+        private void OnPlayerInteractionStateChange(InteractiveObjectsCountChangeEcsEvent _)
+        {
+            HideActionPanel();
+        }
+
+        private void HideActionPanel()
+        {
+            if (_actionsPanel)
+                _actionsPanel.Hide();
         }
 
         private static IEnumerable<IInteractionHandler> GetInteractionHandlers()
@@ -58,7 +74,7 @@ namespace Main.Interaction
         private static EcsEntity[] GetInteractionObjects()
         {
             var entities = Array.Empty<EcsEntity>();
-            EcsWorldStartup.World.GetAllEntities(ref entities);
+            EcsWorldContainer.world.GetAllEntities(ref entities);
             var interactionObjects = entities.Where(IsCanInteractWithEntity).ToArray();
 
             return interactionObjects;
@@ -72,8 +88,8 @@ namespace Main.Interaction
                 await task;
                 _actionsPanel = task.Result.GetComponent<ActionsPanelUI>();
             }
-
-            _actionsPanel.Hide();
+            
+            _actionsPanel.ResetButtons();
 
             foreach (var handler in _interactionHandlers)
             {
@@ -89,6 +105,12 @@ namespace Main.Interaction
         {
             return entity.Has<InteractiveObjectComponent>()
                    && entity.Get<InteractiveObjectComponent>().IsInteractionPossible;
+        }
+
+        public void Dispose()
+        {
+            _playerInput.onActionTriggered -= OnActionTriggered;
+            EcsWorldEventsBlackboard.RemoveEventHandler<InteractiveObjectsCountChangeEcsEvent>(OnPlayerInteractionStateChange);
         }
     }
 }

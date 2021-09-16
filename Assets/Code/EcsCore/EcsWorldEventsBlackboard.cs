@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Main
+namespace EcsCore
 {
     /// <summary>
     /// Доска событий, на которую прилетают события из ECS-мира
@@ -101,11 +101,13 @@ namespace Main
             {
                 _readyEvents.Add(e);
             }
+            _buffer.Clear();
         }
 
         private static void HandleEvents()
         {
-            foreach (var e in _readyEvents.Select(e => e))
+            var events = _readyEvents.Select(e => e).ToArray();
+            foreach (var e in events)
             {
                 if (!_handlers.ContainsKey(e.GetType()))
                     continue;
