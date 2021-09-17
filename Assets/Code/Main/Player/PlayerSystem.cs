@@ -10,9 +10,11 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 namespace Main.Player
 {
     [EcsSystem(typeof(PlayerSetup))]
-    public class PlayerInitSystem : IEcsInitSystem
+    public class PlayerSystem : IEcsInitSystem, IEcsRunSystem
     {
         private GameObject _playerMono;
+        private EcsEntity _player;
+        private EcsFilter<InputComponent> _inputFilter;
 
         public void Init()
         {
@@ -42,12 +44,12 @@ namespace Main.Player
 
         private void CreatePlayer()
         {
-            var player = EcsWorldContainer.world.NewEntity();
-            AddInputComponent(player);
-            AddMovementComponent(player, _playerMono);
+            _player = EcsWorldContainer.world.NewEntity();
+            AddInputComponent();
+            AddMovementComponent(_playerMono);
         }
 
-        private static void AddMovementComponent(EcsEntity player, GameObject playerMono)
+        private void AddMovementComponent(GameObject playerMono)
         {
             var movementComponent = new MovementComponent
             {
@@ -55,13 +57,23 @@ namespace Main.Player
                 Speed = 75f,
                 RotationSpeed = 25f
             };
-            player.Replace(movementComponent);
-            player.Replace(new PlayerComponent());
+            _player.Replace(movementComponent);
+            _player.Replace(new PlayerComponent());
         }
 
-        private static void AddInputComponent(EcsEntity player)
+        private void AddInputComponent()
         {
-            player.Replace(new InputComponent());
+            _player.Replace(new InputComponent());
+        }
+
+        public void Run()
+        {
+            if (_player == EcsEntity.Null)
+                return;
+            
+            ref var input = ref _inputFilter.Get1(0);
+            ref var movement = ref _player.Get<MovementComponent>();
+            movement.MovementInput = input.Movement;
         }
     }
 }
