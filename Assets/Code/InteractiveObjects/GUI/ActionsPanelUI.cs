@@ -1,10 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Common.GUI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
-using Utils.UnityExtensions;
 
 namespace InteractiveObjects.GUI
 {
@@ -14,14 +13,21 @@ namespace InteractiveObjects.GUI
     /// </summary>
     public class ActionsPanelUI : MonoBehaviour
     {
+        private const int START_BUTTONS_COUNT = 4;
         [SerializeField]
         private Transform buttonsParent;
+
+        private readonly List<ButtonData> _buttons = new List<ButtonData>();
+        private readonly Queue<ButtonData> _availableButtons = new Queue<ButtonData>();
 
         public void Awake()
         {
             var camera = Camera.main;
             transform.rotation = Quaternion.Euler(camera.transform.rotation.eulerAngles.x, 0, 0);
             GetComponent<Canvas>().worldCamera = camera;
+            for(var i = START_BUTTONS_COUNT; i > 0; i--)
+                CreateButton();
+            gameObject.SetActive(false);
         }
 
         public void ShowAtObject(Transform target)
@@ -33,27 +39,59 @@ namespace InteractiveObjects.GUI
         
         public void Hide()
         {
+            ResetButtons();
             gameObject.SetActive(false);
         }
         
         public void AddButton(string text, Action onClick)
         {
-            Addressables.InstantiateAsync("ActionButton", buttonsParent).Completed 
-                += handler => OnButtonCreated(handler, text, onClick);
+            var button = _availableButtons.Dequeue();
+            button.Button.onClick.AddListener(() => onClick?.Invoke());
+            button.ButtonWithText.SetText(text);
+            button.GameObject.SetActive(true);
         }
 
-        private void OnButtonCreated(AsyncOperationHandle<GameObject> handler, string text, Action onClick)
+        private async void CreateButton()
         {
-            if (handler.Result == null)
-                throw handler.OperationException;
-            
-            handler.Result.GetComponent<Button>().onClick.AddListener(() => onClick?.Invoke());
-            handler.Result.GetComponent<ButtonWithText>().SetText(text);
+            var task = Addressables.InstantiateAsync("ActionButton", buttonsParent).Task;
+            await task;
+
+            if (task.Result)
+                OnButtonCreated(task.Result);
+            else
+                throw new Exception("Can't create button for actions panel");
         }
 
-        public void ResetButtons()
+        private void OnButtonCreated(GameObject result)
         {
-            buttonsParent.RemoveChildren();
+            var buttonData = new ButtonData
+            {
+                GameObject = result,
+                Button = result.GetComponent<Button>(),
+                ButtonWithText = result.GetComponent<ButtonWithText>()
+            };
+            _buttons.Add(buttonData);
+            _availableButtons.Enqueue(buttonData);
+            result.SetActive(false);
+        }
+
+        private void ResetButtons()
+        {
+            _availableButtons.Clear();
+
+            foreach (var buttonData in _buttons)
+            {
+                buttonData.Button.onClick.RemoveAllListeners();
+                buttonData.GameObject.SetActive(false);
+                _availableButtons.Enqueue(buttonData);
+            }
+        }
+
+        private struct ButtonData
+        {
+            public Button Button;
+            public ButtonWithText ButtonWithText;
+            public GameObject GameObject;
         }
     }
 }

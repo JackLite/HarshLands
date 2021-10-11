@@ -14,8 +14,12 @@ namespace Main.Interaction
 {
     public class InteractionController : IDisposable
     {
+        private const int START_PANELS_COUNT = 4;
+
         private bool _isInteract;
-        private ActionsPanelUI _actionsPanel;
+        
+        private readonly List<ActionsPanelUI> _actionsPanels = new List<ActionsPanelUI>();
+        private readonly Queue<ActionsPanelUI> _availableActionsPanels = new Queue<ActionsPanelUI>();
 
         private readonly IEnumerable<IInteractionHandler> _interactionHandlers;
         private readonly PlayerInput _playerInput;
@@ -26,6 +30,20 @@ namespace Main.Interaction
             _playerInput.onActionTriggered += OnActionTriggered;
             EcsWorldEventsBlackboard.AddEventHandler<InteractiveObjectsCountChangeEcsEvent>(OnPlayerInteractionStateChange);
             _interactionHandlers = GetInteractionHandlers();
+            for (var i = START_PANELS_COUNT; i > 0; i--)
+                CreatePanel();
+        }
+
+        private async void CreatePanel()
+        {
+            var task = Addressables.InstantiateAsync("InteractionPanel").Task;
+            await task;
+
+            if (task.Result == null)
+                throw new Exception("Can't create UI actions panel");
+            var actionsPanelUI = task.Result.GetComponent<ActionsPanelUI>();
+            _actionsPanels.Add(actionsPanelUI);
+            _availableActionsPanels.Enqueue(actionsPanelUI);
         }
 
         private void OnPlayerInteractionStateChange(InteractiveObjectsCountChangeEcsEvent _)
@@ -35,8 +53,12 @@ namespace Main.Interaction
 
         private void HideActionPanel()
         {
-            if (_actionsPanel)
-                _actionsPanel.Hide();
+            _availableActionsPanels.Clear();
+            foreach (var actionsPanel in _actionsPanels)
+            {
+                actionsPanel.Hide();
+                _availableActionsPanels.Enqueue(actionsPanel);
+            }
         }
 
         private static IEnumerable<IInteractionHandler> GetInteractionHandlers()
@@ -65,13 +87,13 @@ namespace Main.Interaction
 
             var interactionObjects = GetInteractionObjects();
 
-            if (interactionObjects.Length == 1)
+            foreach (var interactionObject in interactionObjects)
             {
-                ShowUI(interactionObjects[0]);
+                ShowUI(interactionObject);
             }
         }
 
-        private static EcsEntity[] GetInteractionObjects()
+        private static IEnumerable<EcsEntity> GetInteractionObjects()
         {
             var entities = Array.Empty<EcsEntity>();
             EcsWorldContainer.world.GetAllEntities(ref entities);
@@ -80,25 +102,17 @@ namespace Main.Interaction
             return interactionObjects;
         }
 
-        private async void ShowUI(EcsEntity interactionObject)
+        private void ShowUI(EcsEntity interactionObject)
         {
-            if (_actionsPanel == null)
-            {
-                var task = Addressables.InstantiateAsync("InteractionPanel").Task;
-                await task;
-                _actionsPanel = task.Result.GetComponent<ActionsPanelUI>();
-            }
-            
-            _actionsPanel.ResetButtons();
-
+            var panel = _availableActionsPanels.Dequeue();
             foreach (var handler in _interactionHandlers)
             {
                 if (handler.IsCanInteractWith(interactionObject))
-                    _actionsPanel.AddButton(handler.InteractionName, () => handler.InteractWith(interactionObject));
+                    panel.AddButton(handler.InteractionName, () => handler.InteractWith(interactionObject));
             }
 
             var interactionMono = interactionObject.Get<InteractiveObjectComponent>().Mono;
-            _actionsPanel.ShowAtObject(interactionMono.transform);
+            panel.ShowAtObject(interactionMono.transform);
         }
 
         private static bool IsCanInteractWithEntity(EcsEntity entity)
