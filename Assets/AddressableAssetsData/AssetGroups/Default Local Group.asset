@@ -39,8 +39,14 @@ MonoBehaviour:
     m_Address: InteractiveObject
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 4138601197366414253, guid: 711baf65435440c48a7504bdfa6f106c, type: 3}
-    m_TargetAsset: {fileID: 4138601197366414253, guid: 711baf65435440c48a7504bdfa6f106c, type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 915b7cab0ea7f434696b3b616607d363
+    m_Address: Stamina
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 41cc08b4f158241419a8bf6e7d27a5b4, type: 2}
   m_SchemaSet:

@@ -8,7 +8,7 @@ namespace Main.Movement
     [EcsSystem(typeof(PlayerSetup))]
     public class DashInputSystem : IEcsRunSystem
     {
-        private EcsFilter<InputComponent> _filter;
+        private EcsFilter<InputComponent, StaminaComponent> _filter;
 
         public void Run()
         {
@@ -24,9 +24,16 @@ namespace Main.Movement
                 if (!input.Dash)
                     continue;
 
+                ref var stamina = ref _filter.Get2(i);
+
+                if (stamina.Current < 30)
+                    continue;
+
+                stamina.Current -= 30;
+
                 var dash = new DashComponent
                 {
-                    Duration = 0.1f, DelayBetween = .75f, SpeedMultiplier = 5
+                    Duration = 0.1f, DelayBetween = .75f, SpeedMultiplier = 5, StaminaCost = 30
                 };
                 entity.Replace(dash);
             }

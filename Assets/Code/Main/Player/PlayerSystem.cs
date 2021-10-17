@@ -6,6 +6,7 @@ using Main.Movement;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using Utils.UI;
 
 namespace Main.Player
 {
@@ -46,7 +47,21 @@ namespace Main.Player
         {
             _player = EcsWorldContainer.world.NewEntity();
             AddInputComponent();
+            AddStaminaComponent();
             AddMovementComponent(_playerMono);
+        }
+
+        private async void AddStaminaComponent()
+        {
+            var canvas = CanvasContainer.GetCanvas();
+            var task = Addressables.InstantiateAsync("Stamina", canvas.transform).Task;
+            await task;
+            var staminaMono = task.Result.GetComponent<StaminaMono>();
+            var stamina = new StaminaComponent
+            {
+                Current = 100, Max = 100, Mono = staminaMono, RestorePerSecond = 10
+            };
+            _player.Replace(stamina);
         }
 
         private void AddMovementComponent(GameObject playerMono)
