@@ -15,8 +15,7 @@ namespace Main.Input
         private EcsFilter<InputComponent> _inputFilter;
         private Vector2 _currentMove;
         private bool _interact;
-
-        private const string MOVE_ACTION = "Move";
+        private bool _dash;
 
         public InputReadSystem()
         {
@@ -28,6 +27,7 @@ namespace Main.Input
             ref var input = ref _inputFilter.Get1(0);
             input.Movement = _currentMove;
             input.Interact = _interact;
+            input.Dash = _dash;
         }
 
         public void Init()
@@ -39,12 +39,16 @@ namespace Main.Input
         {
             switch (context.action.name)
             {
-                case MOVE_ACTION:
+                case InputNames.MOVE_ACTION:
                     _currentMove = context.action.ReadValue<Vector2>();
 
                     return;
-                case "Interact":
+                case InputNames.INTERACT_ACTION:
                     _interact = context.action.ReadValue<float>() > 0;
+
+                    return;
+                case InputNames.DASH_ACTION:
+                    _dash = context.action.ReadValue<float>() > 0;
 
                     return;
             }

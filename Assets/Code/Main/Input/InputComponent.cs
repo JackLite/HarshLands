@@ -6,5 +6,6 @@ namespace Main.Input
     {
         public Vector2 Movement;
         public bool Interact;
+        public bool Dash;
     }
 }

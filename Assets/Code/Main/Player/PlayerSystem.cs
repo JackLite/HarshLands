@@ -55,10 +55,10 @@ namespace Main.Player
             {
                 MovementMono = playerMono.GetComponent<MovementMono>(),
                 Speed = 75f,
-                RotationSpeed = 25f
+                RotationSpeed = 25f,
+                SpeedMultiplier = 1f
             };
             _player.Replace(movementComponent);
-            _player.Replace(new PlayerComponent());
         }
 
         private void AddInputComponent()

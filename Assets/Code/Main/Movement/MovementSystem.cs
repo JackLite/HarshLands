@@ -20,7 +20,7 @@ namespace Main.Movement
                 return;
 
             var direction = new Vector3(input.x, 0, input.y);
-            movement.MovementMono.Move(direction, movement.Speed);
+            movement.MovementMono.Move(direction, movement.Speed * movement.SpeedMultiplier);
             movement.MovementMono.Rotate(direction, movement.RotationSpeed);
         }
     }

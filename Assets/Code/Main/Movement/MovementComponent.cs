@@ -6,6 +6,7 @@ namespace Main.Movement
     {
         public Vector2 MovementInput;
         public float Speed;
+        public float SpeedMultiplier;
         public float RotationSpeed;
         public MovementMono MovementMono;
     }
