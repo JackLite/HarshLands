@@ -12,5 +12,10 @@ namespace Main.Movement
         {
             slider.value = val;
         }
+
+        public void SetMax(float max)
+        {
+            slider.maxValue = max;
+        }
     }
 }

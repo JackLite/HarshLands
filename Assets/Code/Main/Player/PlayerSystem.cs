@@ -59,8 +59,9 @@ namespace Main.Player
             var staminaMono = task.Result.GetComponent<StaminaMono>();
             var stamina = new StaminaComponent
             {
-                Current = 100, Max = 100, Mono = staminaMono, RestorePerSecond = 10
+                Current = 200, Max = 200, Mono = staminaMono, RestorePerSecond = 10
             };
+            staminaMono.SetMax(stamina.Max);
             _player.Replace(stamina);
         }
 
