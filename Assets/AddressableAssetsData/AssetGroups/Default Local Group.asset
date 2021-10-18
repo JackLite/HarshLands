@@ -27,8 +27,8 @@ MonoBehaviour:
     m_Address: Player
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+    m_MainAsset: {fileID: 4249154584913298289, guid: 5fa7074f77b16534bbeb169a33f299eb, type: 3}
+    m_TargetAsset: {fileID: 4249154584913298289, guid: 5fa7074f77b16534bbeb169a33f299eb, type: 3}
   - m_GUID: da76d3bbb2846e947ace651a286b2c61
     m_Address: PlayerCamera
     m_ReadOnly: 0
@@ -43,6 +43,12 @@ MonoBehaviour:
     m_TargetAsset: {fileID: 0}
   - m_GUID: 915b7cab0ea7f434696b3b616607d363
     m_Address: Stamina
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 08a9b1e353864504987ff0d21d28d1e1
+    m_Address: Mob
     m_ReadOnly: 0
     m_SerializedLabels: []
     m_MainAsset: {fileID: 0}
