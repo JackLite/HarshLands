@@ -14,6 +14,7 @@ namespace InteractiveObjects.GUI
     public class ActionsPanelUI : MonoBehaviour
     {
         private const int START_BUTTONS_COUNT = 4;
+
         [SerializeField]
         private Transform buttonsParent;
 
@@ -25,7 +26,7 @@ namespace InteractiveObjects.GUI
             var camera = Camera.main;
             transform.rotation = Quaternion.Euler(camera.transform.rotation.eulerAngles.x, 0, 0);
             GetComponent<Canvas>().worldCamera = camera;
-            for(var i = START_BUTTONS_COUNT; i > 0; i--)
+            for (var i = START_BUTTONS_COUNT; i > 0; i--)
                 CreateButton();
             gameObject.SetActive(false);
         }
@@ -36,13 +37,13 @@ namespace InteractiveObjects.GUI
             transform.position = position + Vector3.up * 3;
             gameObject.SetActive(true);
         }
-        
+
         public void Hide()
         {
             ResetButtons();
             gameObject.SetActive(false);
         }
-        
+
         public void AddButton(string text, Action onClick)
         {
             var button = _availableButtons.Dequeue();

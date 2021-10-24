@@ -17,7 +17,7 @@ namespace Main.Interaction
         private const int START_PANELS_COUNT = 4;
 
         private bool _isInteract;
-        
+
         private readonly List<ActionsPanelUI> _actionsPanels = new List<ActionsPanelUI>();
         private readonly Queue<ActionsPanelUI> _availableActionsPanels = new Queue<ActionsPanelUI>();
 
@@ -28,7 +28,8 @@ namespace Main.Interaction
         {
             _playerInput = playerInput;
             _playerInput.onActionTriggered += OnActionTriggered;
-            EcsWorldEventsBlackboard.AddEventHandler<InteractiveObjectsCountChangeEcsEvent>(OnPlayerInteractionStateChange);
+            EcsWorldEventsBlackboard
+                .AddEventHandler<InteractiveObjectsCountChangeEcsEvent>(OnPlayerInteractionStateChange);
             _interactionHandlers = GetInteractionHandlers();
             for (var i = START_PANELS_COUNT; i > 0; i--)
                 CreatePanel();
@@ -54,6 +55,7 @@ namespace Main.Interaction
         private void HideActionPanel()
         {
             _availableActionsPanels.Clear();
+
             foreach (var actionsPanel in _actionsPanels)
             {
                 actionsPanel.Hide();
@@ -105,6 +107,7 @@ namespace Main.Interaction
         private void ShowUI(EcsEntity interactionObject)
         {
             var panel = _availableActionsPanels.Dequeue();
+
             foreach (var handler in _interactionHandlers)
             {
                 if (handler.IsCanInteractWith(interactionObject))
@@ -124,7 +127,8 @@ namespace Main.Interaction
         public void Dispose()
         {
             _playerInput.onActionTriggered -= OnActionTriggered;
-            EcsWorldEventsBlackboard.RemoveEventHandler<InteractiveObjectsCountChangeEcsEvent>(OnPlayerInteractionStateChange);
+            EcsWorldEventsBlackboard
+                .RemoveEventHandler<InteractiveObjectsCountChangeEcsEvent>(OnPlayerInteractionStateChange);
         }
     }
 }

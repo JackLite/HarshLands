@@ -1,14 +1,14 @@
 ﻿using EcsCore;
 using Leopotam.Ecs;
-using Main.Player;
 using UnityEngine;
 
-namespace Main.Movement
+namespace Main.Player.Stamina
 {
     [EcsSystem(typeof(PlayerSetup))]
     public class StaminaSystem : IEcsRunSystem
     {
         private EcsFilter<StaminaComponent> _filter;
+
         public void Run()
         {
             foreach (var i in _filter)
@@ -21,7 +21,7 @@ namespace Main.Movement
                 {
                     stamina.Current = stamina.Max;
                 }
-                
+
                 stamina.Mono.UpdateStamina(stamina.Current);
             }
         }

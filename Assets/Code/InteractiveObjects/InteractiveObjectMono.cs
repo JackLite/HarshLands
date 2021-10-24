@@ -11,7 +11,7 @@ namespace InteractiveObjects
 
         private Color _defaultColor;
         private bool _interactionPossible;
-        
+
         public event Action OnPlayerEnter;
         public event Action OnPlayerExit;
 

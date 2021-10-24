@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Main.Movement
+namespace Main.Player.Stamina
 {
     public class StaminaMono : MonoBehaviour
     {

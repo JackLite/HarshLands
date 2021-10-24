@@ -1,8 +1,7 @@
-﻿using System.Linq;
-using EcsCore;
+﻿using EcsCore;
 using Leopotam.Ecs;
-using Main.Interaction;
 using Main.Player;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +12,7 @@ namespace Main.Input
     {
         private readonly PlayerInput _playerInput;
         private EcsFilter<InputComponent> _inputFilter;
+        private EcsFilter<InputEventComponent> _inputEventFilter;
         private Vector2 _currentMove;
         private bool _interact;
         private bool _dash;
@@ -37,6 +37,19 @@ namespace Main.Input
 
         private void OnActionTriggered(InputAction.CallbackContext context)
         {
+            foreach (var i in _inputEventFilter)
+            {
+                ref var inputEvent = ref _inputEventFilter.Get1(i);
+
+                if (inputEvent.Action != context.action.name)
+                    continue;
+
+                if (context.action.ReadValue<float>() > 0)
+                    inputEvent.State = InputStateEnum.Pressed;
+                else
+                    inputEvent.State = InputStateEnum.None;
+            }
+
             switch (context.action.name)
             {
                 case InputNames.MOVE_ACTION:

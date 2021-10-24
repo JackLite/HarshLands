@@ -101,12 +101,14 @@ namespace EcsCore
             {
                 _readyEvents.Add(e);
             }
+
             _buffer.Clear();
         }
 
         private static void HandleEvents()
         {
             var events = _readyEvents.Select(e => e).ToArray();
+
             foreach (var e in events)
             {
                 if (!_handlers.ContainsKey(e.GetType()))

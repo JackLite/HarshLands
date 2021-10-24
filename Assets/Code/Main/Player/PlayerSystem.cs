@@ -3,6 +3,7 @@ using EcsCore;
 using Leopotam.Ecs;
 using Main.Input;
 using Main.Movement;
+using Main.Player.Stamina;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -22,7 +23,7 @@ namespace Main.Player
             var handle = Addressables.InstantiateAsync("Player", new Vector3(4, 4, 4), Quaternion.identity);
             handle.Completed += OnPlayerCreated;
         }
-        
+
         private void OnPlayerCreated(AsyncOperationHandle<GameObject> handle)
         {
             if (handle.Result == null)
@@ -46,6 +47,7 @@ namespace Main.Player
         private void CreatePlayer()
         {
             _player = EcsWorldContainer.world.NewEntity();
+            _player.Replace(new PlayerTag());
             AddInputComponent();
             AddStaminaComponent();
             AddMovementComponent(_playerMono);
@@ -86,7 +88,7 @@ namespace Main.Player
         {
             if (_player == EcsEntity.Null)
                 return;
-            
+
             ref var input = ref _inputFilter.Get1(0);
             ref var movement = ref _player.Get<MovementComponent>();
             movement.MovementInput = input.Movement;

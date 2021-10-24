@@ -7,6 +7,7 @@ namespace Main.Interaction
     public class DestroyInteraction : IInteractionHandler
     {
         public string InteractionName => "Destroy";
+
         public bool IsCanInteractWith(EcsEntity entity)
         {
             return entity.Has<DestroyableComponent>();

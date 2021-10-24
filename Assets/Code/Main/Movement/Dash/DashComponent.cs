@@ -1,4 +1,4 @@
-﻿namespace Main.Movement
+﻿namespace Main.Movement.Dash
 {
     public struct DashComponent
     {
@@ -7,5 +7,6 @@
         public float DelayBetween;
         public float CurrentDuration;
         public float CurrentDelay;
+        public DashState State;
     }
 }

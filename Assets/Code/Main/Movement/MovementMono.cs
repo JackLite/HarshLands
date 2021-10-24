@@ -25,5 +25,12 @@ namespace Main.Movement
         {
             _rigidbody.AddForce(direction * speed, ForceMode.Acceleration);
         }
+
+        public Vector2 GetForward()
+        {
+            var forward = transform.forward;
+
+            return new Vector2(forward.x, forward.z);
+        }
     }
 }

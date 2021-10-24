@@ -1,4 +1,4 @@
-﻿namespace Main.Movement
+﻿namespace Main.Player.Stamina
 {
     public struct StaminaComponent
     {

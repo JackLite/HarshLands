@@ -10,9 +10,11 @@ namespace InteractiveObjects
     {
         private EcsFilter<InteractiveObjectComponent> _filter;
         private int _previousCount;
+
         public void Run()
         {
             var count = 0;
+
             foreach (var i in _filter)
             {
                 ref var io = ref _filter.Get1(i);
@@ -25,6 +27,7 @@ namespace InteractiveObjects
             {
                 EcsWorldEventsBlackboard.AddEvent(new InteractiveObjectsCountChangeEcsEvent());
             }
+
             _previousCount = count;
         }
     }

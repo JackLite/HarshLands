@@ -12,10 +12,11 @@ namespace Main.Movement
 
         public void RunPhysics()
         {
-            if (_filter.GetEntitiesCount() == 0) 
+            if (_filter.GetEntitiesCount() == 0)
                 return;
             ref var movement = ref _filter.Get1(0);
             var input = movement.MovementInput;
+
             if (input == Vector2.zero)
                 return;
 
